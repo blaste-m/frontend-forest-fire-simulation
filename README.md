@@ -1,4 +1,4 @@
-# FrontendSimulation
+# Partie Frontend - Application de simulation de propagation de feu de forêt
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.0.
 
