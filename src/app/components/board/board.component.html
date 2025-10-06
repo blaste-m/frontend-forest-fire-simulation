@@ -1,0 +1,51 @@
+<section class="form-container">
+  <form class="controls-container">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Number of rows</mat-label>
+      <input matInput type="number" name="height" [min]="'3'" [(ngModel)]="height">
+    </mat-form-field>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Number of columns</mat-label>
+      <input matInput type="number" name="width" [min]="'3'" [(ngModel)]="width">
+    </mat-form-field>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Fire start x index</mat-label>
+      <input matInput type="number" name="indexI" [min]="'0'" [max]="height() - 1" [(ngModel)]="indexI">
+    </mat-form-field>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Fire start y index</mat-label>
+      <input matInput type="number" name="indexJ" [min]="'0'" [max]="width() - 1" [(ngModel)]="indexJ">
+    </mat-form-field>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Fire propagation probability</mat-label>
+      <input matInput type="number" name="probab" [min]="'0'" [max]="'1'" step="0.1" [(ngModel)]="probab">
+    </mat-form-field>
+    <button mat-flat-button (click)="getSimulation()">Get simulation</button>
+  </form>
+</section>
+
+<section class="board-container">
+  @for(board of sigBoards(); track $index) {
+    <table class="board" [hidden]="activeBoardIndex() !== $index">
+      @for (row of board; track $index) {
+        <tr>
+          @for (cell of row ; track $index) {
+            <td [class]="{ 'tree': cell === 0, 'burning': cell === 1, 'ashes': cell === -1 }"
+            ><img [src]="cell === 0 ? 'assets/tree.png' : cell === 1 ? 'assets/fire.png' : 'assets/ashes.png'"/>          }
+        </tr>
+      }
+    </table>
+  }
+</section>
+
+<section class="footer-container">
+  <button mat-flat-button
+          (click)="decrementActiveBoardIndex()"
+          [disabled]="activeBoardIndex() === 0"
+  >Previous</button>
+    Step {{ activeBoardIndex() + 1 }}
+  <button mat-flat-button
+          (click)="incrementActiveBoardIndex()"
+          [disabled]="activeBoardIndex() === sigBoards().length - 1 || sigBoards().length === 0"
+  >Next</button>
+</section>
